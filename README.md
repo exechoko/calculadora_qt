@@ -2,4 +2,4 @@
 
 Calculadora básica desarrollada en QT Creator usando C++
 
-https://i.ibb.co/QN942kK/calculadora.png
+https://github.com/exechoko/calculadora_qt/blob/main/calculadora.png
