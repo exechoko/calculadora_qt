@@ -49,13 +49,19 @@ void MainWindow::digit_pressed()
     double labelNumber;
     QString newLabel;
 
-    if ((ui->sumar->isChecked() || ui->restar->isChecked() || ui->dividir->isChecked() || ui->multiplicar->isChecked()) &&) {
+    if ((ui->sumar->isChecked() || ui->restar->isChecked() || ui->dividir->isChecked() || ui->multiplicar->isChecked()) && (!userIsTypingSecondNumber)) {
         labelNumber = button->text().toDouble();
+        userIsTypingSecondNumber = true;
+        newLabel = QString::number(labelNumber, 'g', 15);
     } else {
-        labelNumber = (ui->label->text() + button->text()).toDouble();
-    }
+        if (ui->label->text().contains('.') && button->text() == "0") {
+            newLabel = ui->label->text() + button->text();
+        } else {
+            labelNumber = (ui->label->text() + button->text()).toDouble();
+            newLabel = QString::number(labelNumber, 'g', 15);
+        }
 
-    newLabel = QString::number(labelNumber, 'g', 15);
+    }
 
     ui->label->setText(newLabel);
 
@@ -90,7 +96,14 @@ void MainWindow::unary_operation_pressed()
 
 void MainWindow::on_clear_released()
 {
+    ui->sumar->setChecked(false);
+    ui->restar->setChecked(false);
+    ui->dividir->setChecked(false);
+    ui->multiplicar->setChecked(false);
 
+    userIsTypingSecondNumber = false;
+
+    ui->label->setText("0");
 }
 
 void MainWindow::on_igual_released()
@@ -121,6 +134,8 @@ void MainWindow::on_igual_released()
         ui->label->setText(newLabel);
         ui->multiplicar->setChecked(false);
     }
+
+    userIsTypingSecondNumber = false;
 
 }
 
